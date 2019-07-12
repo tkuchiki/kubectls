@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -e
+
+CMD="${1}"
+
+usage() {
+    echo "Usage: kubectl update
+
+Update kubectls
+"
+}
+
+update() {
+    cd ${KUBECTLS_ROOT}
+    git pull -q
+    echo "Updated"
+}
+
+case "${CMD}" in
+    -h|--help) usage  ;;
+    *)         update ;;
+esac

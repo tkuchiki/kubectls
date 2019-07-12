@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+
+CMD="${1}"
+
+usage() {
+    echo "Usage: kubectl path
+
+Show current kubectl's abs path
+"
+}
+
+case "${CMD}" in
+    -h|--help) usage ;;
+    *) readlink ${KUBECTLS_BIN}/kubectl ;;
+esac

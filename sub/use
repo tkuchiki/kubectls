@@ -1,0 +1,37 @@
+#!/bin/bash
+
+set -e
+
+CMD="${1}"
+
+usage() {
+    echo "Usage: kubectl use [VERSION]
+
+Set version
+"
+}
+
+set_version() {
+    local version="${1}"
+    local version_dir="${KUBECTLS_VERSIONS}/${version}"
+    if [ ! -d "${version_dir}" ]; then
+        echo "${version} is not installed"
+        exit 1
+    fi
+    
+    ln -snf "${version_dir}/kubectl" ${KUBECTLS_BIN}/kubectl
+    [ $? -eq 0 ] && echo "${version} selected"
+}
+
+case "${CMD}" in
+    "")
+        PS3="Which version? "
+        select v in $(ls ${KUBECTLS_VERSIONS}); do
+            set_version ${v}
+            break
+        done
+        ;;
+    -h|--help) usage ;;
+    *)
+        set_version "${CMD}"
+esac

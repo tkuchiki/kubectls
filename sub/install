@@ -1,0 +1,65 @@
+#!/bin/bash
+
+set -e
+
+CMD="${1}"
+OPTION="${2}"
+VERSION="${CMD}"
+
+get_stable_version() {
+    VERSION="$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)"
+    echo ${VERSION}
+}
+
+os() {
+    local _os="$(uname)"
+    if [ "${_os}" = "Darwin" ]; then
+        echo "darwin"
+        return
+    elif [ "${_os}" = "Linux" ]; then
+         echo "linux"
+         return
+    fi
+       
+    echo "${_os} is not supported"
+    exit 1
+}
+
+download() {
+    local version="${1}"
+    local version_dir="${KUBECTLS_VERSIONS}/${version}"
+    local ctlbin="${version_dir}/kubectl"
+    
+    if [ -f "${ctlbin}" ]; then
+        echo "${version} is already installed"
+        exit
+    fi
+    
+    mkdir -p ${version_dir}
+    curl -L https://storage.googleapis.com/kubernetes-release/release/${version}/bin/$(os)/amd64/kubectl -o "${ctlbin}"
+    
+    chmod +x ${ctlbin}
+
+    echo
+    echo "${version} is installed"
+}
+
+usage() {
+    echo "Usage: kubectl install (VERSION|stable) [--set]
+
+Install kubectl
+
+Options:
+  --set     Set version
+"
+}
+
+case ${CMD} in
+    -h | --help) usage ;;
+    stable)   download $(get_stable_version) ;;
+    *)        download ${CMD}
+esac
+
+if [ "${OPTION}" = "--use" ]; then
+    bash ${KUBECTLS_SUBCMD}/use ${VERSION}
+fi
