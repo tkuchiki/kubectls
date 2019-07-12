@@ -11,7 +11,10 @@ $ git clone https://github.com/tkuchiki/kubectls ~/.kubectls
 ## Usage
 
 ```console
-$ export PATH=~/.kubectls/bin:$PATH
+# for bash
+$ echo "PATH=~/.kubectls/bin:\$PATH" >> ~/.bashrc
+$ echo "export $PATH" >> ~/.bashrc
+
 $ kubectls --help
 Usage: kubectls
 
@@ -81,7 +84,7 @@ Set version
 $ kubectls use v1.14.0
 v1.14.0 selected
 
-$ ./bin/kubectls use
+$ kubectls use
 1) v1.13.0
 2) v1.14.0
 3) v1.15.0
