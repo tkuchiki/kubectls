@@ -11,7 +11,7 @@ export KUBECTLS_SUBCMD="${KUBECTLS_ROOT}/sub"
 usage() {
     echo "Usage: kubectls
 
-kubectls is kubectl version manager
+kubectls is a kubectl version manager
 
 Commands:
   install   Install kubectl
