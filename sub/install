@@ -45,12 +45,12 @@ download() {
 }
 
 usage() {
-    echo "Usage: kubectl install (VERSION|stable) [--set]
+    echo "Usage: kubectl install (VERSION|stable) [--use]
 
 Install kubectl
 
 Options:
-  --set     Set version
+  --use     Set version
 "
 }
 

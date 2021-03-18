@@ -36,12 +36,12 @@ Options:
 
 ```console
 $ kubectls install --help
-Usage: kubectl install (VERSION|stable) [--set]
+Usage: kubectl install (VERSION|stable) [--use]
 
 Install kubectl
 
 Options:
-  --set     Set version
+  --use     Set version
 
 $ kubectls install stable
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
